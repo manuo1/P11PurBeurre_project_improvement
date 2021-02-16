@@ -1,0 +1,62 @@
+{% extends 'base.html'%}
+<!-- account creation page-->
+{% load static %}
+{% block content %}
+
+<!-- Masthead-->
+<header class="masthead">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center justify-content-center text-center">
+      <div class="col-lg-10 align-self-end">
+        <h2 class="text-white font-weight-bold">Création de votre compte</h2>
+        <hr class="divider light my-4" />
+        {% for field in form %}
+        <h3 class="text-white"> {{ field.errors }} </h3>
+        {% endfor %}
+      </div>
+      <div class="col-lg-8 align-self-baseline text-left">
+        <form method="POST"  role="form" action="">
+          {% csrf_token %}
+          <div class='row'>
+            <div class='col-md-6 py-1'>
+              {{ form.username.label_tag }}
+              {{ form.username }}
+            </div>
+            <div class='col-md-6 py-1'>
+              {{ form.first_name.label_tag }}
+              {{ form.first_name }}
+            </div>
+          </div>
+          <div class='row'>
+            <div class='col-md-12 py-1'>
+              {{ form.email.label_tag }}
+              {{ form.email }}
+            </div>
+          </div>
+          <div class='row'>
+            <div class='col-md-6 py-1'>
+              {{ form.password1.label_tag }}
+              {{ form.password1 }}
+            </div>
+            <div class='col-md-6 py-1'>
+              {{ form.password2.label_tag }}
+              {{ form.password2 }}
+            </div>
+          </div>
+          <div class='row'>
+            <div class='col py-1'>
+              <input class="btn btn-primary btn-block" type="submit" value="Créer votre Compte" id="button-create-submit"/>
+            </div>
+          </div>
+        </form>
+        <hr class="divider light my-4"/>
+        <div class='row'>
+          <div class='col py-1'>
+            <a href="{% url 'loginPage' %}" class="btn btn-info btn-block">Se Connecter</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+{% endblock %}

@@ -1,0 +1,10 @@
+env
+.env
+__pycache__
+.coverage
+staticfiles
+geckodriver
+django.log
+geckodriver.log
+populatedb.log
+supervisor_stderr.log
