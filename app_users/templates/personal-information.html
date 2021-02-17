@@ -1,0 +1,42 @@
+{% extends 'base.html'%}
+<!-- account creation page-->
+{% load static %}
+{% block content %}
+
+<!-- Masthead-->
+<header class="masthead">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center justify-content-center text-center">
+      <div class="col-lg-10 align-self-end">
+        <h2 class="text-white font-weight-bold">Mes informations personnelles</h2>
+        <hr class="divider light my-4" >
+        {%  for field in form  %}
+        <h3 class="text-white"> {{ field.errors }} </h3>
+        {% endfor %}
+      </div>
+      <div class="col-lg-6 align-self-baseline text-white font-weight-bold">
+        <div class='row my-2 pt-1 bg-info rounded'>
+          <div class='col-md-5 text-md-right text-center '>Nom d’utilisateur :</div>
+          <div class='col-md-5 text-md-left text-center '>{{ user.username }}</div>
+          <div class='col-md-2 text-md-left text-center '><a href="{% url 'userInfoPage' %}"><i class="fas fa fa-edit text-primary ml-4" title="Modifier" ></i></a></div>
+        </div>
+        <div class='row my-2 pt-1 bg-info rounded'>
+          <div class='col-md-5 text-md-right text-center'>Prénom :</div>
+          <div class='col-md-5 text-md-left text-center'>{{ user.first_name }}</div>
+          <div class='col-md-2 text-md-left text-center'><a href="{% url 'userInfoPage' %}"><i class="fas fa fa-edit text-primary ml-4" title="Modifier" ></i></a></div>
+      </div>
+        <div class='row my-2 pt-1 bg-info rounded'>
+          <div class='col-md-5 text-md-right text-center'>Adresse électronique :</div>
+          <div class='col-md-5 text-md-left text-center'>{{ user.email }}</div>
+          <div class='col-md-2 text-md-left text-center'><a href="{% url 'userInfoPage' %}"><i class="fas fa fa-edit text-primary ml-4" title="Modifier" ></i></a></div>
+        </div>
+        <div class='row my-2 pt-1 bg-info rounded'>
+          <div class='col-md-5 text-md-right text-center'>Mot de passe :</div>
+          <div class='col-md-5 text-md-left text-center'>**************</div>
+          <div class='col-md-2 text-md-left text-center'><a href="{% url 'update-password' %}"><i class="fas fa fa-edit text-primary ml-4" title="Modifier" ></i></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+{% endblock %}

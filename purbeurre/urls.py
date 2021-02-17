@@ -16,16 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-
-def sentry_error_test(request):
-    """Raises an error when using sentry-debug/ url."""
-    """ that will be captured by Sentry  """
-    division_by_zero = 1 / 0
-
-
 urlpatterns = [
     path('mo1admin/', admin.site.urls),
     path('user/', include('app_users.urls')),
     path('', include('app_products.urls')),
-    path('sentry-debug/', sentry_error_test),
 ]

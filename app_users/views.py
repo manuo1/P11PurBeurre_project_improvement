@@ -61,3 +61,8 @@ def logoutCurrentUser(request):
 def profile(request):
     """manage user profile page."""
     return render(request, 'profile.html', context)
+
+@login_required()
+def userInfoPage(request):
+    """manage user personal information page."""
+    return render(request, 'personal-information.html', context)
