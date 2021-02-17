@@ -4,9 +4,11 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from app_products.forms import ProductSearchForm
+from .models import UsersManager
 
 from .forms import PersonalUserCreationForm, UserInformationUpdateForm
 
+user_manager = UsersManager()
 context = {'search_form': ProductSearchForm()}
 
 
@@ -76,6 +78,15 @@ def updateUserInfoPage(request):
             new_username = user_update_form.cleaned_data.get('username_update')
             new_first_name = user_update_form.cleaned_data.get('first_name_update')
             new_email = user_update_form.cleaned_data.get('email_update')
+            actual_username = request.user.username
+            actual_first_name = request.user.first_name
+            actual_email = request.user.email
+            if new_username != actual_username :
+                user_manager.change_username(request.user, new_username)
+            if new_first_name != actual_first_name :
+                user_manager.change_first_name(request.user, new_first_name)
+            if new_email != actual_email :
+                user_manager.change_email(request.user, new_email)
             return render(request, 'personal-information.html', context)
 
     user_update_form = UserInformationUpdateForm(initial=

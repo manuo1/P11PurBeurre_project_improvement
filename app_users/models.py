@@ -14,6 +14,17 @@ class UsersManager(models.Manager):
     def add_to_favorites_list(self, user, product):
         user.favorites.add(product)
 
+    def change_username(self, user, new_username):
+        user.username = new_username
+        user.save()
+
+    def change_first_name(self, user, new_first_name):
+        user.first_name = new_first_name
+        user.save()
+
+    def change_email(self, user, new_email):
+        user.email = new_email
+        user.save()
 
 class User(AbstractUser):
     """addition of a relationship many to many."""
