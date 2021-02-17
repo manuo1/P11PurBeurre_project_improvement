@@ -1,0 +1,40 @@
+{% extends 'base.html'%}
+<!-- account creation page-->
+{% load static %}
+{% block content %}
+
+<!-- Masthead-->
+<header class="masthead">
+  <div class="container h-100">
+    <div class="row h-25 align-items-center justify-content-center text-center">
+      <div class="col-lg-10 align-self-end">
+        <h2 class="text-white font-weight-bold">Modifier mes informations personnelles</h2>
+        <hr class="divider light my-4" >
+        {%  for field in form  %}
+        <h3 class="text-white"> {{ field.errors }} </h3>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="row h-75 mx-2 align-items-center justify-content-center text-center">
+      <div class="col-lg-6 align-self-baseline text-white font-weight-bold">
+        <form method="POST"  role="form" action="">
+          {% csrf_token %}
+          <div class='row my-2 bg-info rounded'>
+            <div class='col-md-6 text-md-right text-center pt-3'>Nom d’utilisateur :</div>
+            <div class='col-md-6 text-md-left text-center pt-3'>{{ user_update_form.username_update }}</div>
+            <div class='col-md-6 text-md-right text-center py-1'>Prénom :</div>
+            <div class='col-md-6 text-md-left text-center py-1'>{{ user_update_form.first_name_update }}</div>
+            <div class='col-md-6 text-md-right text-center pb-3'>Adresse électronique :</div>
+            <div class='col-md-6 text-md-left text-center pb-3'>{{ user_update_form.email_update }}</div>
+          </div>
+          <div class='row'>
+            <div class='col py-1'>
+              <input class="btn btn-primary btn-block" type="submit" value="Modifier" id="button-user-info-update-submit"/>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+{% endblock %}

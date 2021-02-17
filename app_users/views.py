@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render
 
 from app_products.forms import ProductSearchForm
 
-from .forms import PersonalUserCreationForm
+from .forms import PersonalUserCreationForm, UserInformationUpdateForm
 
 context = {'search_form': ProductSearchForm()}
 
@@ -66,3 +66,24 @@ def profile(request):
 def userInfoPage(request):
     """manage user personal information page."""
     return render(request, 'personal-information.html', context)
+
+@login_required
+def updateUserInfoPage(request):
+    """manage user update personal information page."""
+    if request.method == 'POST':
+        user_update_form = UserInformationUpdateForm(request.POST)
+        if user_update_form.is_valid():
+            new_username = user_update_form.cleaned_data.get('username_update')
+            new_first_name = user_update_form.cleaned_data.get('first_name_update')
+            new_email = user_update_form.cleaned_data.get('email_update')
+            return render(request, 'personal-information.html', context)
+
+    user_update_form = UserInformationUpdateForm(initial=
+        {
+        'username_update': request.user.username,
+        'first_name_update': request.user.first_name,
+        'email_update' : request.user.email,
+        }
+    )
+    context.update({'user_update_form': user_update_form })
+    return render(request, 'update-personal-information.html', context)
