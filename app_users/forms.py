@@ -32,11 +32,11 @@ class PersonalUserCreationForm(UserCreationForm):
         self.fields['password1'].widget.attrs['class'] = 'form-control'
         self.fields['password2'].widget.attrs['class'] = 'form-control'
 
+
 class UserInformationUpdateForm(forms.Form):
     username_update = forms.CharField(initial="Nom", max_length=100)
     first_name_update = forms.CharField(initial="Prénom", max_length=100)
     email_update = forms.EmailField(initial="Email", max_length=100)
-
 
     def __init__(self, *args, **kwargs):
         super(UserInformationUpdateForm, self).__init__(*args, **kwargs)

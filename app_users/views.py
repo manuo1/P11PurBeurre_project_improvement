@@ -5,9 +5,9 @@ from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import redirect, render
 
 from app_products.forms import ProductSearchForm
-from .models import UsersManager
 
 from .forms import PersonalUserCreationForm, UserInformationUpdateForm
+from .models import UsersManager
 
 user_manager = UsersManager()
 context = {'search_form': ProductSearchForm()}
@@ -65,55 +65,59 @@ def profile(request):
     """manage user profile page."""
     return render(request, 'profile.html', context)
 
+
 @login_required()
 def userInfoPage(request):
     """manage user personal information page."""
+    context.update({'messages': []})
     return render(request, 'personal-information.html', context)
 
+
 class PersonalPasswordChangeView(PasswordChangeView):
-    """ Add a message to confirm that the password change worked  """
-    context.update({'messages': ["Votre mot de passe a été modifié"] })
+    """Add a message to confirm that the password change worked."""
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Votre mot de passe a été modifié')
+        return super().form_valid(form)
+
 
 @login_required
 def updateUserInfoPage(request):
     """manage user update personal information page."""
     if request.method == 'POST':
+        messages = []
         user_update_form = UserInformationUpdateForm(request.POST)
         if user_update_form.is_valid():
-            messages = []
-            new_username = user_update_form.cleaned_data.get(
-                'username_update')
+            new_username = user_update_form.cleaned_data.get('username_update')
             new_first_name = user_update_form.cleaned_data.get(
-                'first_name_update')
+                'first_name_update'
+            )
             new_email = user_update_form.cleaned_data.get('email_update')
             actual_username = request.user.username
             actual_first_name = request.user.first_name
             actual_email = request.user.email
-            if new_username != actual_username :
-                message = (
-                    user_manager.change_username(request.user, new_username)
+            if new_username != actual_username:
+                message = user_manager.change_username(
+                    request.user, new_username
                 )
                 messages.append(message)
-            if new_first_name != actual_first_name :
-                message = (
-                    user_manager.change_first_name(request.user,
-                        new_first_name)
+            if new_first_name != actual_first_name:
+                message = user_manager.change_first_name(
+                    request.user, new_first_name
                 )
                 messages.append(message)
-            if new_email != actual_email :
-                message = (
-                    user_manager.change_email(request.user, new_email)
-                )
+            if new_email != actual_email:
+                message = user_manager.change_email(request.user, new_email)
                 messages.append(message)
-            context.update({'messages': messages })
+            context.update({'messages': messages})
             return render(request, 'personal-information.html', context)
 
-    user_update_form = UserInformationUpdateForm(initial=
-        {
-        'username_update': request.user.username,
-        'first_name_update': request.user.first_name,
-        'email_update' : request.user.email,
+    user_update_form = UserInformationUpdateForm(
+        initial={
+            'username_update': request.user.username,
+            'first_name_update': request.user.first_name,
+            'email_update': request.user.email,
         }
     )
-    context.update({'user_update_form': user_update_form })
+    context.update({'user_update_form': user_update_form})
     return render(request, 'update-personal-information.html', context)

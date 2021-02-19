@@ -16,8 +16,10 @@ sentry_logging = LoggingIntegration(
 )
 
 sentry_sdk.init(
-    dsn=("https://751878c9886d41ed853ed05124aa3c62@o516111."
-         + "ingest.sentry.io/5622155"),
+    dsn=(
+        "https://751878c9886d41ed853ed05124aa3c62@o516111."
+        + "ingest.sentry.io/5622155"
+    ),
     integrations=[DjangoIntegration(), sentry_logging],
     traces_sample_rate=1.0,
     send_default_pii=True,
@@ -28,8 +30,10 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format': ('{levelname} {asctime} {module} '
-                       + '{process:d} {thread:d} {message}'),
+            'format': (
+                '{levelname} {asctime} {module} '
+                + '{process:d} {thread:d} {message}'
+            ),
             'style': '{',
         },
     },

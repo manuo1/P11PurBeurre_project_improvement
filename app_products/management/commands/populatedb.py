@@ -1,14 +1,15 @@
 import os
-
-
 from datetime import datetime
+
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
 
 from app_products.models import FoodCategory, FoodProduct
+
 from .offdata.cleaner import Cleaner
 from .offdata.download import Download
+
 
 class Command(BaseCommand):
     help = """Populate database with food products from the Open Food Fact API,
@@ -66,7 +67,6 @@ class Command(BaseCommand):
         with open(populatedb_log_file, "a") as log:
             log.write("\n" + str(datetime.now()) + "\n" + msg)
             log.write(str(self.db_infos()))
-
 
     def add_food_products_in_database(self, data_to_add):
         """add cleaned and formated food products in data base."""

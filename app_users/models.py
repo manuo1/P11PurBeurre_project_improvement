@@ -1,5 +1,5 @@
 from django.contrib.auth.models import AbstractUser
-from django.db import models, IntegrityError
+from django.db import IntegrityError, models
 
 from app_products.models import FoodProduct
 
@@ -37,6 +37,7 @@ class UsersManager(models.Manager):
             return "Votre adresse email a été modifié"
         except IntegrityError:
             pass
+
 
 class User(AbstractUser):
     """addition of a relationship many to many."""
