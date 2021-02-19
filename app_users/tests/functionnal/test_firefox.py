@@ -66,7 +66,7 @@ class FirefoxFunctionalTestCases(LiveServerTestCase):
             in self.get_html_in('login-messages')
         )
 
-    def test_user_can_update_his_personnal_info(self):
+    def test_user_can_update_their_personnal_info(self):
         """test if user can update his personnals informations."""
         self.login_the_user()
         self.go_to_url_name('updateUserInfoPage')

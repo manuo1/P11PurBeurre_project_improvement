@@ -88,14 +88,17 @@ def updateUserInfoPage(request):
         messages = []
         user_update_form = UserInformationUpdateForm(request.POST)
         if user_update_form.is_valid():
+            """ get new user data from form """
             new_username = user_update_form.cleaned_data.get('username_update')
             new_first_name = user_update_form.cleaned_data.get(
                 'first_name_update'
             )
             new_email = user_update_form.cleaned_data.get('email_update')
+            """ get actual user data """
             actual_username = request.user.username
             actual_first_name = request.user.first_name
             actual_email = request.user.email
+            """ compare and modify if new data differs from old data """
             if new_username != actual_username:
                 message = user_manager.change_username(
                     request.user, new_username
