@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import redirect, render
 
 from app_products.forms import ProductSearchForm
@@ -68,6 +69,10 @@ def profile(request):
 def userInfoPage(request):
     """manage user personal information page."""
     return render(request, 'personal-information.html', context)
+
+class PersonalPasswordChangeView(PasswordChangeView):
+    """ Add a message to confirm that the password change worked  """
+    context.update({'messages': ["Votre mot de passe a été modifié"] })
 
 @login_required
 def updateUserInfoPage(request):

@@ -1,5 +1,4 @@
 from django.urls import path
-from django.contrib.auth import views as auth_views
 
 from app_products.forms import ProductSearchForm
 from app_users import views
@@ -13,7 +12,7 @@ urlpatterns = [
     path('update-personal-information',
         views.updateUserInfoPage, name='updateUserInfoPage'
     ),
-    path('update-password', auth_views.PasswordChangeView.as_view(
+    path('update-password', views.PersonalPasswordChangeView.as_view(
         template_name='update-password.html',
         success_url='personal-information',
         extra_context={'search_form': ProductSearchForm()},
