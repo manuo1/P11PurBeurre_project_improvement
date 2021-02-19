@@ -6,7 +6,6 @@ from app_products.models import FoodCategory, FoodProduct
 
 firefox_options = webdriver.FirefoxOptions()
 firefox_options.add_argument('--headless')
-firefox_options.add_argument('window-size=1600x900')
 firefox_options.set_preference("browser.privatebrowsing.autostart", True)
 
 
