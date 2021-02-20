@@ -23,7 +23,7 @@ def registerPage(request):
         if form.is_valid():
             form.save()
             user = form.cleaned_data.get('username')
-            messages.success(
+            messages.info(
                 request, 'Un nouveau compte vient d\'être créé pour ' + user
             )
             return redirect('loginPage')
@@ -69,7 +69,6 @@ def profile(request):
 @login_required()
 def userInfoPage(request):
     """manage user personal information page."""
-    context.update({'messages': []})
     return render(request, 'personal-information.html', context)
 
 
@@ -77,7 +76,7 @@ class PersonalPasswordChangeView(PasswordChangeView):
     """Add a message to confirm that the password change worked."""
 
     def form_valid(self, form):
-        messages.success(self.request, 'Votre mot de passe a été modifié')
+        messages.info(self.request, 'Votre mot de passe a été modifié')
         return super().form_valid(form)
 
 
@@ -85,7 +84,6 @@ class PersonalPasswordChangeView(PasswordChangeView):
 def updateUserInfoPage(request):
     """manage user update personal information page."""
     if request.method == 'POST':
-        messages = []
         user_update_form = UserInformationUpdateForm(request.POST)
         if user_update_form.is_valid():
             """ get new user data from form """
@@ -103,16 +101,16 @@ def updateUserInfoPage(request):
                 message = user_manager.change_username(
                     request.user, new_username
                 )
-                messages.append(message)
+                messages.info(request, message)
             if new_first_name != actual_first_name:
                 message = user_manager.change_first_name(
                     request.user, new_first_name
                 )
-                messages.append(message)
+                messages.info(request, message)
             if new_email != actual_email:
                 message = user_manager.change_email(request.user, new_email)
-                messages.append(message)
-            context.update({'messages': messages})
+                messages.info(request, message)
+            print(request.user.username)
             return render(request, 'personal-information.html', context)
 
     user_update_form = UserInformationUpdateForm(

@@ -61,10 +61,13 @@ class FirefoxFunctionalTestCases(LiveServerTestCase):
         self.write_in_id('id_password1', "testpassword2")
         self.write_in_id('id_password2', "testpassword2")
         self.click_on_id('button-create-submit')
-        self.assertTrue(
-            "Un nouveau compte vient d'être créé pour testusername2"
-            in self.get_html_in('login-messages')
+        self.login_the_user('testusername2', 'testpassword2')
+        self.assertEqual(
+            self.driver.current_url,
+            self.live_server_url + reverse('profilePage'),
         )
+
+
 
     def test_user_can_update_their_personnal_info(self):
         """test if user can update his personnals informations."""
@@ -96,8 +99,10 @@ class FirefoxFunctionalTestCases(LiveServerTestCase):
             self.live_server_url + reverse('profilePage'),
         )
 
+    """ some methods to improve the readability of tests """
+
     def login_the_user(self, username='testusername', password='testpassword'):
-        """test if user can connect and disconnect."""
+        """ run the login procedure  """
         self.go_to_url_name('indexPage')
         self.click_on_id('button-login')
         self.write_in_id('id_username', username)
@@ -105,18 +110,22 @@ class FirefoxFunctionalTestCases(LiveServerTestCase):
         self.click_on_id('button-login-submit')
 
     def write_in_id(self, element_id, value):
+        """ find element by id and send keys inside """
         element = self.driver.find_element_by_id(element_id)
         element.clear()
         element.send_keys(value)
 
     def click_on_id(self, element_id):
+        """ find element by id and click on it """
         self.driver.find_element_by_id(element_id).click()
 
     def get_html_in(self, element_id):
+        """ find element by id and return the html contained inside """
         html = self.driver.find_element_by_id(element_id).get_attribute(
             'innerHTML'
         )
         return html
 
     def go_to_url_name(self, url_name):
+        """ access a web page with its URL name  """
         self.driver.get(self.live_server_url + reverse(url_name))

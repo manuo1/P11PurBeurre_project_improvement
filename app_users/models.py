@@ -15,29 +15,36 @@ class UsersManager(models.Manager):
         user.favorites.add(product)
 
     def change_username(self, user, new_username):
+        message = ''
+        old_username = user.username
+        user.username = new_username
         try:
-            user.username = new_username
             user.save()
-            return "Votre nom d'utilisateur a été modifié"
+            message = "Votre nom d'utilisateur a été modifié"
         except IntegrityError:
-            return "Ce nom d'utilisateur est déja utilisé"
+            user.username = old_username
+            message = "Ce nom d'utilisateur est déja utilisé"
+        return message
 
     def change_first_name(self, user, new_first_name):
+        message = ''
         try:
             user.first_name = new_first_name
             user.save()
-            return "Votre prénom a été modifié"
+            message = "Votre prénom a été modifié"
         except IntegrityError:
             pass
+        return message
 
     def change_email(self, user, new_email):
+        message = ''
         try:
             user.email = new_email
             user.save()
-            return "Votre adresse email a été modifié"
+            message = "Votre adresse email a été modifié"
         except IntegrityError:
             pass
-
+        return message
 
 class User(AbstractUser):
     """addition of a relationship many to many."""
