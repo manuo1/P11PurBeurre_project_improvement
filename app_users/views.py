@@ -110,7 +110,6 @@ def updateUserInfoPage(request):
             if new_email != actual_email:
                 message = user_manager.change_email(request.user, new_email)
                 messages.info(request, message)
-            print(request.user.username)
             return render(request, 'personal-information.html', context)
 
     user_update_form = UserInformationUpdateForm(
